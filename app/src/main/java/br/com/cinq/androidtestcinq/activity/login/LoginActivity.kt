@@ -4,19 +4,23 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import br.com.cinq.androidtestcinq.R
+import br.com.cinq.androidtestcinq.activity.home.HomeActivity
 import br.com.cinq.androidtestcinq.activity.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
-class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
+class LoginActivity : AppCompatActivity(), LoginView {
 
-    private var presenter: LoginContract.LoginPresenter? = null
+    private var presenter: LoginPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        title = "Login" //Todo: trocar depois
 
         // Action Login
         btn_login.setOnClickListener { onClickLogin() }
@@ -30,19 +34,19 @@ class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
         // validate password
         edit_password_login.addTextChangedListener(onTextWatcherSenha())
 
-        // Get instance LoginPresenter
-        presenter = LoginPresenter(this, LoginInteractor())
+        // Get instance LoginPresenterImpl
+        presenter = LoginPresenterImpl(this, LoginInteractorImpl())
 
         // Disable login button
         disableButton()
     }
 
     override fun showProgress() {
-        //progress.visibility = View.VISIBLE
+        runOnUiThread { progress_login.visibility = View.VISIBLE }
     }
 
     override fun hideProgress() {
-        //progress.visibility = View.GONE
+        runOnUiThread { progress_login.visibility = View.GONE }
     }
 
     override fun setUsernameError(msg: String) {
@@ -66,7 +70,7 @@ class LoginActivity : AppCompatActivity(), LoginContract.LoginView {
     }
 
     override fun navigateToHome() {
-        //startActivity<HomeActivity>()
+        startActivity<HomeActivity>()
         finish()
     }
 

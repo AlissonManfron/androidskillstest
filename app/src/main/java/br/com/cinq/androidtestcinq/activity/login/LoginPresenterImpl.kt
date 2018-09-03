@@ -4,15 +4,17 @@ import br.com.cinq.androidtestcinq.MyApplication
 import br.com.cinq.androidtestcinq.R
 import br.com.cinq.androidtestcinq.extensions.isEmailValid
 
-class LoginPresenter(private var loginView: LoginContract.LoginView?,
-                     private val loginInteractor: LoginContract.LoginInteractor) : LoginContract.LoginPresenter {
+class LoginPresenterImpl(private var loginView: LoginView?,
+                         private val loginInteractor: LoginInteractor?) : LoginPresenter {
 
     private var isEmailOk = false
     private var isPasswordOk = false
 
     override fun validateCredentials(username: String, password: String) {
+        loginView?.showProgress()
+        loginView?.disableButton()
 
-        loginInteractor.login(username, password, object : LoginContract.LoginInteractor.OnLoginFinishedListener {
+        loginInteractor?.login(username, password, object : LoginInteractor.OnLoginFinishedListener {
             override fun onSuccess() {
                 loginView?.enableButton()
                 loginView?.hideProgress()
