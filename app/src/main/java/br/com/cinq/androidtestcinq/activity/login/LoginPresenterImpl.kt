@@ -18,7 +18,7 @@ class LoginPresenterImpl(private var loginView: LoginView?,
             override fun onSuccess() {
                 loginView?.enableButton()
                 loginView?.hideProgress()
-                loginView?.navigateToHome()
+                loginView?.navigateToMenu()
             }
 
             override fun onError() {

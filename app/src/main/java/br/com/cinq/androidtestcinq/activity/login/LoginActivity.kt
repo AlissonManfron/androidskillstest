@@ -6,7 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import br.com.cinq.androidtestcinq.R
-import br.com.cinq.androidtestcinq.activity.home.HomeActivity
+import br.com.cinq.androidtestcinq.activity.menu.MenuActivity
 import br.com.cinq.androidtestcinq.activity.register.RegisterActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
@@ -20,7 +20,8 @@ class LoginActivity : AppCompatActivity(), LoginView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        title = "Login" //Todo: trocar depois
+        // Title activity
+        title = "Login"
 
         // Action Login
         btn_login.setOnClickListener { onClickLogin() }
@@ -69,8 +70,8 @@ class LoginActivity : AppCompatActivity(), LoginView {
         toast("Seu e-mail ou sua senha, estão incorretos!")
     }
 
-    override fun navigateToHome() {
-        startActivity<HomeActivity>()
+    override fun navigateToMenu() {
+        startActivity<MenuActivity>()
         finish()
     }
 

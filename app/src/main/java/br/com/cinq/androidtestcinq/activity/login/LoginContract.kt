@@ -16,7 +16,7 @@ interface LoginView {
 
     fun setLoginError()
 
-    fun navigateToHome()
+    fun navigateToMenu()
 
     fun onClickLogin()
 
