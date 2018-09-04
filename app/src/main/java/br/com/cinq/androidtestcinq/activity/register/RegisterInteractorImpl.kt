@@ -1,20 +1,30 @@
 package br.com.cinq.androidtestcinq.activity.register
 
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
+import br.com.cinq.androidtestcinq.persistence.AppDatabase
+import br.com.cinq.androidtestcinq.persistence.User
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
-class RegisterInteractorImpl : RegisterInteractor{
+class RegisterInteractorImpl : RegisterInteractor {
 
 
-    override fun cadastrar(email: String, name: String, senha: String, listener: RegisterInteractor.OnRegisterFinishedListener) {
+    override fun cadastrar(name: String, email: String, password: String, listener: RegisterInteractor.OnRegisterFinishedListener) {
 
-        Observable.interval(2000, TimeUnit.MILLISECONDS)
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+        // Get instance database
+        val database = AppDatabase.getInstance()?.userDao()
+
+        // Create user
+        val user = User(null, email, name, password)
+
+        // Save user in background thread
+        Observable.fromCallable { database?.insert(user) }
+                .subscribeOn(Schedulers.computation())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    listener.onSuccess()
+                    if (it != null) listener.onSuccess() else listener.onError()
+                }, {
+                    listener.onError()
                 })
     }
 }

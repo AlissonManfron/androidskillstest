@@ -21,10 +21,10 @@ class LoginPresenterImpl(private var loginView: LoginView?,
                 loginView?.navigateToHome()
             }
 
-            override fun onError(msg: String) {
+            override fun onError() {
                 loginView?.enableButton()
                 loginView?.hideProgress()
-                loginView?.setLoginError(msg)
+                loginView?.setLoginError()
             }
         })
     }

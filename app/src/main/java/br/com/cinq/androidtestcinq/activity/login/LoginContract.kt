@@ -14,7 +14,7 @@ interface LoginView {
 
     fun removePasswordError()
 
-    fun setLoginError(msg: String)
+    fun setLoginError()
 
     fun navigateToHome()
 
@@ -44,9 +44,9 @@ interface LoginInteractor {
 
         fun onSuccess()
 
-        fun onError(msg: String)
+        fun onError()
     }
 
-    fun login(username: String, password: String, listener: OnLoginFinishedListener)
+    fun login(email: String, password: String, listener: OnLoginFinishedListener)
 
 }

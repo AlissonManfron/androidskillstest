@@ -19,11 +19,13 @@ class RegisterPresenterImpl(private var registerView: RegisterView?,
             override fun onSuccess() {
                 registerView?.enableButton()
                 registerView?.hideProgress()
+                registerView?.setRegisterSuccess()
             }
 
             override fun onError() {
                 registerView?.enableButton()
                 registerView?.hideProgress()
+                registerView?.setRegisterError()
             }
         })
     }

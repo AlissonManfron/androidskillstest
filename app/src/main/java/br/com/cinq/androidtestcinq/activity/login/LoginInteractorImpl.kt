@@ -1,18 +1,25 @@
 package br.com.cinq.androidtestcinq.activity.login
 
-import rx.Observable
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
+import br.com.cinq.androidtestcinq.persistence.AppDatabase
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class LoginInteractorImpl : LoginInteractor {
 
-    override fun login(username: String, password: String, listener: LoginInteractor.OnLoginFinishedListener) {
-        Observable.interval(2000, TimeUnit.MILLISECONDS)
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    listener.onSuccess()
+    override fun login(email: String, password: String, listener: LoginInteractor.OnLoginFinishedListener) {
+
+        // Get instance database
+        val database = AppDatabase.getInstance()?.userDao()
+
+        // Validate user in background thread
+        database?.validate(email, password)
+                ?.subscribeOn(Schedulers.computation())
+                ?.observeOn(AndroidSchedulers.mainThread())
+                ?.subscribe({
+                    if (it != null) listener.onSuccess() else listener.onError()
+                }, {
+                    listener.onError()
                 })
     }
 

@@ -78,7 +78,6 @@ class RegisterActivity : AppCompatActivity(), RegisterView {
         toast("Não foi possível realizar seu cadastro, tente novamente!")
     }
 
-
     override fun setRegisterSuccess() {
         toast("Cadastro realizado com sucesso!")
         finish()

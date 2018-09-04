@@ -65,8 +65,8 @@ class LoginActivity : AppCompatActivity(), LoginView {
         text_input_password_login.error = null
     }
 
-    override fun setLoginError(msg: String) {
-        toast(msg)
+    override fun setLoginError() {
+        toast("Seu e-mail ou sua senha, estão incorretos!")
     }
 
     override fun navigateToHome() {
