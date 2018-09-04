@@ -1,7 +1,7 @@
 package br.com.cinq.androidtestcinq.activity.login
 
 import br.com.cinq.androidtestcinq.persistence.AppDatabase
-import io.reactivex.Observable
+import br.com.cinq.androidtestcinq.preference.Prefs
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -17,7 +17,12 @@ class LoginInteractorImpl : LoginInteractor {
                 ?.subscribeOn(Schedulers.computation())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe({
-                    if (it != null) listener.onSuccess() else listener.onError()
+                    if (it != null) {
+                        Prefs.setUser(it)
+                        listener.onSuccess()
+                    } else {
+                        listener.onError()
+                    }
                 }, {
                     listener.onError()
                 })

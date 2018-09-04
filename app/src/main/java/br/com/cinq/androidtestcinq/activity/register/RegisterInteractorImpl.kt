@@ -15,7 +15,7 @@ class RegisterInteractorImpl : RegisterInteractor {
         val database = AppDatabase.getInstance()?.userDao()
 
         // Create user
-        val user = User(null, email, name, password)
+        val user = User(null, name, email, password)
 
         // Save user in background thread
         Observable.fromCallable { database?.insert(user) }

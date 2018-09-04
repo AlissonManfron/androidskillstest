@@ -19,8 +19,8 @@ interface UserDAO {
     @Query("SELECT * FROM user WHERE name LIKE :name")
     fun gelByName(name: String): Flowable<MutableList<User>>
 
-    @Query("SELECT * FROM user WHERE name LIKE :name AND password LIKE :password")
-    fun validate(name: String, password: String): Single<User>
+    @Query("SELECT * FROM user WHERE email LIKE :email AND password LIKE :password")
+    fun validate(email: String, password: String): Single<User>
 
     @Insert(onConflict = REPLACE)
     fun insert(user: User)
