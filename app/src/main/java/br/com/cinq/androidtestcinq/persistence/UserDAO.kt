@@ -4,9 +4,8 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
 import android.arch.persistence.room.Query
-import io.reactivex.Completable
+import android.arch.persistence.room.Update
 import io.reactivex.Flowable
-import io.reactivex.Observable
 import io.reactivex.Single
 
 
@@ -14,10 +13,13 @@ import io.reactivex.Single
 interface UserDAO {
 
     @Query("SELECT * FROM user")
-    fun gelAll(): Flowable<MutableList<User>>
+    fun getAll(): Flowable<MutableList<User>>
 
     @Query("SELECT * FROM user WHERE name LIKE :name")
-    fun gelByName(name: String): Flowable<MutableList<User>>
+    fun getByName(name: String): Flowable<MutableList<User>>
+
+    @Query("SELECT * FROM user WHERE email LIKE :email")
+    fun getByEmail(email: String): Single<User>
 
     @Query("SELECT * FROM user WHERE email LIKE :email AND password LIKE :password")
     fun validate(email: String, password: String): Single<User>
@@ -28,6 +30,9 @@ interface UserDAO {
     @Query("DELETE from user WHERE id=:id")
     fun deleteById(id: Long)
 
-    @Query("UPDATE user SET name=:name, email=:email, password=:password WHERE id=:id")
-    fun update(name: String, email: String, password: String, id: Long)
+    @Query("SELECT * FROM user WHERE id=:id")
+    fun getById(id: Long): Single<User>
+
+    @Update()
+    fun update(user: User)
 }

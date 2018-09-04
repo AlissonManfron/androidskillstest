@@ -3,6 +3,7 @@ package br.com.cinq.androidtestcinq.activity.register
 import br.com.cinq.androidtestcinq.MyApplication
 import br.com.cinq.androidtestcinq.R
 import br.com.cinq.androidtestcinq.extensions.isEmailValid
+import br.com.cinq.androidtestcinq.persistence.User
 
 class RegisterPresenterImpl(private var registerView: RegisterView?,
                             private val registerInteractor: RegisterInteractor) : RegisterPresenter {
@@ -16,16 +17,30 @@ class RegisterPresenterImpl(private var registerView: RegisterView?,
         registerView?.disableButton()
 
         registerInteractor.cadastrar(name, email, password, object : RegisterInteractor.OnRegisterFinishedListener {
-            override fun onSuccess() {
+            override fun onSuccess(msg: String) {
                 registerView?.enableButton()
                 registerView?.hideProgress()
-                registerView?.setRegisterSuccess()
+                registerView?.setRegisterSuccess(msg)
             }
 
             override fun onError() {
                 registerView?.enableButton()
                 registerView?.hideProgress()
                 registerView?.setRegisterError()
+            }
+        })
+    }
+
+    override fun verifyEditMode(id: Long) {
+        if (id == -1L) return
+
+        registerInteractor.getUserById(id, object : RegisterInteractor.OnFindUserFinishedListener {
+            override fun onSuccess(user: User) {
+                registerView?.setUser(user)
+            }
+
+            override fun onError() {
+
             }
         })
     }

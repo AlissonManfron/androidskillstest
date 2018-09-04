@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.View
 import br.com.cinq.androidtestcinq.R
 import br.com.cinq.androidtestcinq.extensions.setupToolbar
+import br.com.cinq.androidtestcinq.persistence.User
 import kotlinx.android.synthetic.main.activity_register.*
 import org.jetbrains.anko.toast
 
@@ -18,8 +19,10 @@ class RegisterActivity : AppCompatActivity(), RegisterView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        var id = intent.getLongExtra("id", -1)
+
         // Config Toolbar
-        setupToolbar(R.id.toolbar, "Cadastro", true)
+        setupToolbar(R.id.toolbar, if (id == -1L) "Cadastro" else "Editar Usuário", true)
 
         // On click button save user
         btn_register.setOnClickListener({ onClickRegister() })
@@ -35,6 +38,8 @@ class RegisterActivity : AppCompatActivity(), RegisterView {
 
         // Get instance presenter
         presenter = RegisterPresenterImpl(this, RegisterInteractorImpl())
+
+        presenter?.verifyEditMode(id)
 
         // Disable button register
         disableButton()
@@ -78,8 +83,8 @@ class RegisterActivity : AppCompatActivity(), RegisterView {
         toast("Não foi possível realizar seu cadastro, tente novamente!")
     }
 
-    override fun setRegisterSuccess() {
-        toast("Cadastro realizado com sucesso!")
+    override fun setRegisterSuccess(msg: String) {
+        toast(msg)
         finish()
     }
 
@@ -96,6 +101,13 @@ class RegisterActivity : AppCompatActivity(), RegisterView {
     override fun onClickRegister() {
         presenter?.cadastrar(edit_name_register.text.toString(),
                 edit_email_register.text.toString(), edit_password_register.text.toString())
+    }
+
+    override fun setUser(user: User) {
+        edit_name_register.setText(user.name)
+        edit_email_register.setText(user.email)
+        edit_email_register.isEnabled = false
+        edit_password_register.setText(user.password)
     }
 
     private fun onTextWatcherPassword(): TextWatcher? {

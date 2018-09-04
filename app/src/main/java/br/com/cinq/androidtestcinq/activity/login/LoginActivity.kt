@@ -1,5 +1,6 @@
 package br.com.cinq.androidtestcinq.activity.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
@@ -80,7 +81,9 @@ class LoginActivity : AppCompatActivity(), LoginView {
     }
 
     override fun onClickRegister() {
-        startActivity<RegisterActivity>()
+        val it = Intent(this, RegisterActivity::class.java)
+        it.putExtra("id", -1L)
+        startActivity(it)
     }
 
     override fun enableButton() {

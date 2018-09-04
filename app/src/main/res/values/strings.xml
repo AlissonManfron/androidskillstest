@@ -5,4 +5,5 @@
     <string name="email_error_invalid">E-mail inválido</string>
     <string name="email_is_empty">Campo e-mail é obrigatório</string>
     <string name="name_error">Campo nome é obrigatório</string>
+    <string name="ok">OK</string>
 </resources>
