@@ -1,8 +1,9 @@
 package br.com.cinq.androidtestcinq.activity.menu
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import br.com.cinq.androidtestcinq.R
+import br.com.cinq.androidtestcinq.activity.album.AlbumActivity
 import br.com.cinq.androidtestcinq.activity.home.HomeActivity
 import br.com.cinq.androidtestcinq.extensions.setupToolbar
 import kotlinx.android.synthetic.main.activity_menu.*
@@ -26,6 +27,6 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun onClickAlbuns() {
-        startActivity<HomeActivity>()
+        startActivity<AlbumActivity>()
     }
 }

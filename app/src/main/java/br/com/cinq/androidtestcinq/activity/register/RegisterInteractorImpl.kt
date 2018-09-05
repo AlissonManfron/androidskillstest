@@ -29,7 +29,8 @@ class RegisterInteractorImpl : RegisterInteractor {
                             ?.subscribeOn(Schedulers.computation())
                             ?.observeOn(AndroidSchedulers.mainThread())
                             ?.subscribe({
-                                Prefs.setUser(user)
+                                if (Prefs.getUser().email == user.email)
+                                    Prefs.setUser(user)
                                 listener.onSuccess("Usuário atualizado com sucesso!")
                             }, {
                                 listener.onError()

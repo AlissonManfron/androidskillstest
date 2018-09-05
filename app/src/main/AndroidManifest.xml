@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.cinq.androidtestcinq">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -24,6 +26,8 @@
             android:name=".activity.home.HomeActivity"
             android:parentActivityName=".activity.menu.MenuActivity" />
         <activity android:name=".activity.menu.MenuActivity" />
+        <activity android:name=".activity.album.AlbumActivity"
+            android:parentActivityName=".activity.menu.MenuActivity" />
     </application>
 
 </manifest>

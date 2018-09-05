@@ -53,7 +53,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     override fun setNameUser(name: String) {
-        txt_name_user.text = name
+        txt_name_user.text = "Bem vindo(a) $name"
     }
 
     override fun setListUsers(users: MutableList<User>) {
